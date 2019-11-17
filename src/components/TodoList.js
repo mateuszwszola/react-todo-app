@@ -1,15 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TodoItem from './TodoItem';
-import { Paper, List } from '@material-ui/core';
+import { Paper, List, Divider } from '@material-ui/core';
 
-function TodoList({ todos, removeTodo, toggleCompleted }) {
+function TodoList({ todos, removeTodo, toggleCompleted, editTodo }) {
+  const sortedByCompleteTodos = todos.sort((a, b) => !a.completed ? -1 : 1); 
 	return (
 		<Paper>
 			<List>
-				{todos.map((todo) => (
-					<TodoItem key={todo.id} todo={todo} removeTodo={removeTodo} toggleCompleted={toggleCompleted} />
-				))}
+        {todos.length > 0 ? (
+          <>
+          {sortedByCompleteTodos.map((todo, idx) => (
+            <React.Fragment key={todo.id}>
+              <TodoItem todo={todo} removeTodo={removeTodo} toggleCompleted={toggleCompleted} editTodo={editTodo} />
+              {todos.length - 1 > idx && <Divider />}
+            </React.Fragment>
+          ))}
+          </>
+        ) : (
+            <p>No Todos</p>
+        )}
 			</List>
 		</Paper>
 	);
