@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useInputState from '../hooks/useInputState';
 import useToggleState from '../hooks/useToggleState';
@@ -8,7 +8,17 @@ import { ListItemSecondaryAction } from '@material-ui/core';
 
 function TodoItem({ todo, removeTodo, toggleCompleted, editTodo }) {
 	const [ isEditting, toggleIsEditting ] = useToggleState(false);
-	const [ editTaskValue, handleEditTaskValueChange ] = useInputState(todo.task);
+  const [ editTaskValue, handleEditTaskValueChange ] = useInputState(todo.task);
+  
+  useEffect(() => {
+		function escapeForm(e) {
+			if (e.keyCode === 27 && isEditting) {
+        toggleIsEditting();
+			}
+		}
+		document.addEventListener('keydown', escapeForm, false);
+		return () => document.removeEventListener('keydown', escapeForm, false);
+	}, []);
 
 	function handleRemoveTodo() {
 		removeTodo(todo.id);
@@ -35,18 +45,20 @@ function TodoItem({ todo, removeTodo, toggleCompleted, editTodo }) {
 
 	return (
 		<ListItem>
-			<Checkbox tabIndex={-1} checked={todo.checked} onChange={handleToggleCompleted} />
 			{isEditting ? (
 				<form onSubmit={handleEditTaskSubmit}>
-					<TextField label="Edit task" value={editTaskValue} onChange={handleEditTaskValueChange} />
+					<TextField label="Edit task" value={editTaskValue} onChange={handleEditTaskValueChange} autoFocus />
 				</form>
 			) : (
+        <>
+				<Checkbox tabIndex={-1} checked={todo.completed} onChange={handleToggleCompleted} />
 				<ListItemText
 					onClick={toggleIsEditting}
 					style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
 				>
 					{todo.task}
 				</ListItemText>
+        </>
 			)}
 			<ListItemSecondaryAction>
 				{isEditting ? (
@@ -69,7 +81,8 @@ function TodoItem({ todo, removeTodo, toggleCompleted, editTodo }) {
 TodoItem.propTypes = {
 	todo: PropTypes.object.isRequired,
 	removeTodo: PropTypes.func.isRequired,
-	toggleCompleted: PropTypes.func.isRequired
+	toggleCompleted: PropTypes.func.isRequired,
+	editTodo: PropTypes.func.isRequired
 };
 
 export default TodoItem;

@@ -28,7 +28,8 @@ function TodoList({ todos, removeTodo, toggleCompleted, editTodo }) {
 TodoList.propTypes = {
 	todos: PropTypes.array.isRequired,
 	removeTodo: PropTypes.func.isRequired,
-	toggleCompleted: PropTypes.func.isRequired
+  toggleCompleted: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
 };
 
 export default TodoList;
