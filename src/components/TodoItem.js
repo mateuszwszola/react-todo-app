@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import useInputState from '../hooks/useInputState';
 import useToggleState from '../hooks/useToggleState';
@@ -10,16 +10,6 @@ function TodoItem({ todo, removeTodo, toggleCompleted, editTodo }) {
 	const [ isEditting, toggleIsEditting ] = useToggleState(false);
   const [ editTaskValue, handleEditTaskValueChange ] = useInputState(todo.task);
   
-  useEffect(() => {
-		function escapeForm(e) {
-			if (e.keyCode === 27 && isEditting) {
-        toggleIsEditting();
-			}
-		}
-		document.addEventListener('keydown', escapeForm, false);
-		return () => document.removeEventListener('keydown', escapeForm, false);
-	}, []);
-
 	function handleRemoveTodo() {
 		removeTodo(todo.id);
 	}

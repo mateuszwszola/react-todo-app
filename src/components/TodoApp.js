@@ -1,29 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import useTodosState from '../hooks/useTodosState';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
-import { addTodo, removeTodo, toggleCompleted, editTodo } from '../actions';
 import { Grid, Typography, Paper, AppBar, Toolbar } from '@material-ui/core';
-import { getRandomId } from '../helpers';
 
 function TodoApp() {
-	const initialState = [ { id: getRandomId(), task: 'Practice React Hooks', completed: false } ];
-	const [ todos, setTodos ] = useState(initialState);
+	const initialTodos = JSON.parse(window.localStorage.getItem('todos') || '[]');
+	const { todos, addTodo, removeTodo, toggleCompleted, editTodo } = useTodosState(initialTodos);
 
-	function handleAddTodo(task) {
-		setTodos(addTodo(todos, task));
-	}
-
-	function handleRemoveTodo(todoId) {
-		setTodos(removeTodo(todos, todoId));
-	}
-
-	function handleToggleCompleted(todoId) {
-		setTodos(toggleCompleted(todos, todoId));
-	}
-
-	function handleEditTodo(todoId, newTodoTask) {
-		setTodos(editTodo(todos, todoId, newTodoTask));
-	}
+	useEffect(
+		() => {
+			window.localStorage.setItem('todos', JSON.stringify(todos));
+		},
+		[ todos ]
+	);
 
 	return (
 		<Paper
@@ -42,12 +32,12 @@ function TodoApp() {
 			</AppBar>
 			<Grid container justify="center" style={{ marginTop: '1rem' }}>
 				<Grid item xs={11} sm={9} md={7} lg={4}>
-					<TodoForm addTodo={handleAddTodo} />
+					<TodoForm addTodo={addTodo} />
 					<TodoList
 						todos={todos}
-						removeTodo={handleRemoveTodo}
-						toggleCompleted={handleToggleCompleted}
-						editTodo={handleEditTodo}
+						removeTodo={removeTodo}
+						toggleCompleted={toggleCompleted}
+						editTodo={editTodo}
 					/>
 				</Grid>
 			</Grid>

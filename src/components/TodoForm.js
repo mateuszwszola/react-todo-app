@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useInputState from '../hooks/useInputState';
-import { Paper, TextField, Input } from '@material-ui/core';
+import { Paper, TextField } from '@material-ui/core';
 
 function TodoForm({ addTodo }) {
 	const [ task, handleTaskChange, handleReset ] = useInputState('');
