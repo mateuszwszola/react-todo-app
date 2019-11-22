@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import useLocalStorageState from './useLocalStorageState';
 import { getRandomId } from '../helpers';
 
-function useTodosState(initialTodos) {
-	const [ todos, setTodos ] = useState(initialTodos);
+function useTodosState(initialTodos = []) {
+	const [ todos, setTodos ] = useLocalStorageState('todos', initialTodos);
 
 	return {
 		todos,

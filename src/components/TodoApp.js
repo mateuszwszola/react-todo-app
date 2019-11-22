@@ -1,19 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useTodosState from '../hooks/useTodosState';
+import { getRandomId } from '../helpers';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import { Grid, Typography, Paper, AppBar, Toolbar } from '@material-ui/core';
 
 function TodoApp() {
-	const initialTodos = JSON.parse(window.localStorage.getItem('todos') || '[]');
+	const initialTodos = [ { id: getRandomId(), task: 'Practice React Hooks', completed: false } ];
 	const { todos, addTodo, removeTodo, toggleCompleted, editTodo } = useTodosState(initialTodos);
-
-	useEffect(
-		() => {
-			window.localStorage.setItem('todos', JSON.stringify(todos));
-		},
-		[ todos ]
-	);
 
 	return (
 		<Paper
