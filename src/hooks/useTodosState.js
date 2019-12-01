@@ -1,5 +1,5 @@
 import useLocalStorageState from './useLocalStorageState';
-import { getRandomId } from '../helpers';
+import { addTodo, removeTodo, toggleCompleted, editTodo } from '../actions/todoActions';
 
 function useTodosState(initialTodos = []) {
 	const [ todos, setTodos ] = useLocalStorageState('todos', initialTodos);
@@ -7,26 +7,16 @@ function useTodosState(initialTodos = []) {
 	return {
 		todos,
 		addTodo(task) {
-			setTodos([ ...todos, { id: getRandomId(), task, completed: false } ]);
+			setTodos(addTodo(todos, task));
 		},
 		removeTodo(todoId) {
-			setTodos(todos.filter((todo) => todo.id !== todoId));
+			setTodos(removeTodo(todos, todoId));
 		},
 		toggleCompleted(todoId) {
-			setTodos(todos.map((todo) => (todo.id === todoId ? { ...todo, completed: !todo.completed } : todo)));
+			setTodos(toggleCompleted(todos, todoId));
 		},
 		editTodo(todoId, newTodoTask) {
-			setTodos(
-				todos.map(
-					(todo) =>
-						todo.id === todoId
-							? {
-									...todo,
-									task: newTodoTask
-								}
-							: todo
-				)
-			);
+			setTodos(editTodo(todos, todoId, newTodoTask));
 		}
 	};
 }

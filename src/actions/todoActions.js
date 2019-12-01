@@ -1,4 +1,4 @@
-import { getRandomId } from './helpers';
+import { getRandomId } from '../helpers';
 
 export function addTodo(todos, task) {
 	return [ ...todos, { id: getRandomId(), task, completed: false } ];

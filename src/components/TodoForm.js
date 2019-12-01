@@ -1,31 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import useInputState from '../hooks/useInputState';
 import { Paper, TextField } from '@material-ui/core';
+import { TodosContext } from '../contexts/todosContext';
 
-function TodoForm({ addTodo }) {
-	const [ task, handleTaskChange, handleReset ] = useInputState('');
+function TodoForm() {
+  const { addTodo } = useContext(TodosContext);
+  const [task, handleTaskChange, handleReset] = useInputState('');
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		if (task !== '') {
-			addTodo(task);
-			handleReset();
-		}
-	}
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (task !== '') {
+      addTodo(task);
+      handleReset();
+    }
+  }
 
-	return (
-		<Paper style={{ margin: '1rem 0', padding: '0 1rem' }}>
-			<form onSubmit={handleSubmit}>
-				<TextField value={task} onChange={handleTaskChange} margin="normal" label="Add new todo" fullWidth />
-				{/* <Input type="submit" value="Add Todo" /> */}
-			</form>
-		</Paper>
-	);
+  return (
+    <Paper style={{ margin: '1rem 0', padding: '0 1rem' }}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          value={task}
+          onChange={handleTaskChange}
+          margin="normal"
+          label="Add new todo"
+          fullWidth
+        />
+      </form>
+    </Paper>
+  );
 }
-
-TodoForm.propTypes = {
-	addTodo: PropTypes.func.isRequired
-};
 
 export default TodoForm;

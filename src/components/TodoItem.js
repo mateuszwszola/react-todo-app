@@ -1,78 +1,99 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import useInputState from '../hooks/useInputState';
 import useToggleState from '../hooks/useToggleState';
-import { ListItem, ListItemText, Checkbox, IconButton, TextField } from '@material-ui/core';
-import { Delete as DeleteIcon, Edit as EditIcon, Done as DoneIcon } from '@material-ui/icons';
+import {
+  ListItem,
+  ListItemText,
+  Checkbox,
+  IconButton,
+  TextField
+} from '@material-ui/core';
+import {
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Done as DoneIcon
+} from '@material-ui/icons';
 import { ListItemSecondaryAction } from '@material-ui/core';
+import { TodosContext } from '../contexts/todosContext';
 
-function TodoItem({ todo, removeTodo, toggleCompleted, editTodo }) {
-	const [ isEditting, toggleIsEditting ] = useToggleState(false);
-  const [ editTaskValue, handleEditTaskValueChange ] = useInputState(todo.task);
-  
-	function handleRemoveTodo() {
-		removeTodo(todo.id);
-	}
+function TodoItem({ todo }) {
+  const { removeTodo, toggleCompleted, editTodo } = useContext(TodosContext);
+  const [isEditting, toggleIsEditting] = useToggleState(false);
+  const [editTaskValue, handleEditTaskValueChange] = useInputState(todo.task);
 
-	function handleToggleCompleted() {
-		toggleCompleted(todo.id);
-		if (isEditting) {
-			toggleIsEditting();
-		}
-	}
+  function handleRemoveTodo() {
+    removeTodo(todo.id);
+  }
 
-	function handleSaveTask() {
-		if (editTaskValue && editTaskValue !== todo.task) {
-			editTodo(todo.id, editTaskValue);
-		}
-		toggleIsEditting();
-	}
+  function handleToggleCompleted() {
+    toggleCompleted(todo.id);
+    if (isEditting) {
+      toggleIsEditting();
+    }
+  }
 
-	function handleEditTaskSubmit(e) {
-		e.preventDefault();
-		handleSaveTask();
-	}
+  function handleSaveTask() {
+    if (editTaskValue && editTaskValue !== todo.task) {
+      editTodo(todo.id, editTaskValue);
+    }
+    toggleIsEditting();
+  }
 
-	return (
-		<ListItem>
-			{isEditting ? (
-				<form onSubmit={handleEditTaskSubmit}>
-					<TextField label="Edit task" value={editTaskValue} onChange={handleEditTaskValueChange} autoFocus />
-				</form>
-			) : (
+  function handleEditTaskSubmit(e) {
+    e.preventDefault();
+    handleSaveTask();
+  }
+
+  return (
+    <ListItem style={{ height: '64px' }}>
+      {isEditting ? (
+        <form onSubmit={handleEditTaskSubmit}>
+          <TextField
+            label="Edit task"
+            value={editTaskValue}
+            onChange={handleEditTaskValueChange}
+            autoFocus
+          />
+        </form>
+      ) : (
         <>
-				<Checkbox tabIndex={-1} checked={todo.completed} onChange={handleToggleCompleted} />
-				<ListItemText
-					onClick={toggleIsEditting}
-					style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
-				>
-					{todo.task}
-				</ListItemText>
+          <Checkbox
+            tabIndex={-1}
+            checked={todo.completed}
+            onChange={handleToggleCompleted}
+          />
+          <ListItemText
+            onClick={toggleIsEditting}
+            style={{
+              textDecoration: todo.completed ? 'line-through' : 'none',
+              cursor: 'pointer'
+            }}
+          >
+            {todo.task}
+          </ListItemText>
         </>
-			)}
-			<ListItemSecondaryAction>
-				{isEditting ? (
-					<IconButton onClick={handleSaveTask} aria-label="Save">
-						<DoneIcon />
-					</IconButton>
-				) : (
-					<IconButton onClick={toggleIsEditting} aria-label="Edit">
-						<EditIcon />
-					</IconButton>
-				)}
-				<IconButton onClick={handleRemoveTodo} aria-label="Delete">
-					<DeleteIcon />
-				</IconButton>
-			</ListItemSecondaryAction>
-		</ListItem>
-	);
+      )}
+      <ListItemSecondaryAction>
+        {isEditting ? (
+          <IconButton onClick={handleSaveTask} aria-label="Save">
+            <DoneIcon />
+          </IconButton>
+        ) : (
+          <IconButton onClick={toggleIsEditting} aria-label="Edit">
+            <EditIcon />
+          </IconButton>
+        )}
+        <IconButton onClick={handleRemoveTodo} aria-label="Delete">
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  );
 }
 
 TodoItem.propTypes = {
-	todo: PropTypes.object.isRequired,
-	removeTodo: PropTypes.func.isRequired,
-	toggleCompleted: PropTypes.func.isRequired,
-	editTodo: PropTypes.func.isRequired
+  todo: PropTypes.object.isRequired
 };
 
 export default TodoItem;
