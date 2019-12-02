@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import PropTypes from 'prop-types';
 import useInputState from '../hooks/useInputState';
 import useToggleState from '../hooks/useToggleState';
@@ -15,19 +15,19 @@ import {
   Done as DoneIcon
 } from '@material-ui/icons';
 import { ListItemSecondaryAction } from '@material-ui/core';
-import { TodosContext } from '../contexts/todosContext';
+import { TodosDispatchContext } from '../contexts/todosContext';
 
 function TodoItem({ todo }) {
-  const { removeTodo, toggleCompleted, editTodo } = useContext(TodosContext);
+  const dispatch = useContext(TodosDispatchContext);
   const [isEditting, toggleIsEditting] = useToggleState(false);
   const [editTaskValue, handleEditTaskValueChange] = useInputState(todo.task);
 
   function handleRemoveTodo() {
-    removeTodo(todo.id);
+    dispatch({ type: 'REMOVE_TODO', todoId: todo.id });
   }
 
   function handleToggleCompleted() {
-    toggleCompleted(todo.id);
+    dispatch({ type: 'TOGGLE_COMPLETED', todoId: todo.id });
     if (isEditting) {
       toggleIsEditting();
     }
@@ -35,7 +35,7 @@ function TodoItem({ todo }) {
 
   function handleSaveTask() {
     if (editTaskValue && editTaskValue !== todo.task) {
-      editTodo(todo.id, editTaskValue);
+      dispatch({ type: 'EDIT_TODO', todoId: todo.id, newTask: editTaskValue });
     }
     toggleIsEditting();
   }
@@ -96,4 +96,4 @@ TodoItem.propTypes = {
   todo: PropTypes.object.isRequired
 };
 
-export default TodoItem;
+export default memo(TodoItem);

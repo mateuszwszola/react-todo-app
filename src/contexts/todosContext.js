@@ -1,5 +1,5 @@
-import React, { createContext } from 'react';
-import useTodosState from '../hooks/useTodosState';
+import React, { createContext, useReducer } from 'react';
+import todosReducer from '../reducers/todosReducer';
 
 const initialTodos = [
   { id: 1, task: 'Practice React Hooks', completed: true },
@@ -7,14 +7,17 @@ const initialTodos = [
 ];
 
 const TodosContext = createContext();
+const TodosDispatchContext = createContext();
 
 function TodosProvider(props) {
-  const todosState = useTodosState(initialTodos);
+  const [todos, dispatch] = useReducer(todosReducer, initialTodos);
   return (
-    <TodosContext.Provider value={todosState}>
-      {props.children}
+    <TodosContext.Provider value={todos}>
+      <TodosDispatchContext.Provider value={dispatch}>
+        {props.children}
+      </TodosDispatchContext.Provider>
     </TodosContext.Provider>
   );
 }
 
-export { TodosContext, TodosProvider };
+export { TodosContext, TodosDispatchContext, TodosProvider };

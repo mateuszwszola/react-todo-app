@@ -20,7 +20,7 @@ function todosReducer(state, action) {
         todo.id === action.todoId
           ? {
               ...todo,
-              task: newTodoTask
+              task: action.newTask
             }
           : todo
       );
