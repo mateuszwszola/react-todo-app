@@ -27,18 +27,17 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2)
   },
   container: {
-    width: '80%',
+    width: 'calc(100% - 100px)',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: theme.spacing(2)
+    alignItems: 'center'
   },
   actionsContainer: {
-    width: '20%',
+    flex: '100px',
+    flexShrink: 0,
     display: 'flex',
-    alignItems: 'center',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(1)
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   nobreak: {
     overflow: 'hidden',

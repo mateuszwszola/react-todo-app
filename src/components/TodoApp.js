@@ -19,7 +19,7 @@ function TodoApp() {
   return (
     <div className={classes.root}>
       <Grid container justify="center" className={classes.gridContainer}>
-        <Grid item xs={12} sm={10} md={8} lg={6}>
+        <Grid item xs={12} sm={9} md={7} lg={5}>
           <TodosProvider>
             <TodoForm />
             <TodoList />
