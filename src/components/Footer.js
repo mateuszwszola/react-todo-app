@@ -4,12 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   footer: {
+    width: '100%',
+    textAlign: 'center',
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
-    backgroundColor:
-      theme.palette.type === 'dark'
-        ? theme.palette.grey[800]
-        : theme.palette.grey[200]
+    backgroundColor: theme.palette.primary.main,
+    color: 'white'
   }
 }));
 
