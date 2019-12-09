@@ -1,15 +1,12 @@
 import React from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   footer: {
     width: '100%',
-    textAlign: 'center',
-    padding: theme.spacing(3, 2),
-    marginTop: 'auto',
-    backgroundColor: theme.palette.primary.main,
-    color: 'white'
+    padding: theme.spacing(6, 0),
+    backgroundColor: theme.palette.background.paper
   }
 }));
 
@@ -18,10 +15,22 @@ function Footer() {
 
   return (
     <footer className={classes.footer}>
-      <Container maxWidth="sm">
-        <Typography variant="body1">React Todo App With Hooks</Typography>
-        <Typography variant="body2" color="textSecondary">
+      <Container maxWidth="lg">
+        <Typography variant="h6" align="center" gutterBottom>
+          React Todo App With Hooks
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="textSecondary"
+          component="p"
+        >
           {new Date().getFullYear()}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" align="center">
+          <Link href="https://github.com/mateuszwszola/react-todo-app">
+            Source on GitHub
+          </Link>
         </Typography>
       </Container>
     </footer>

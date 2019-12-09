@@ -13,6 +13,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fafafa',
     padding: 0,
     margin: 0
+    // backgroundImage: 'url(https://source.unsplash.com/random)',
+    // backgroundRepeat: 'no-repeat',
+    // backgroundSize: 'cover',
+    // backgroundPosition: 'center'
   },
   main: {
     padding: 0

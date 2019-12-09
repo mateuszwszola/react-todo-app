@@ -51,7 +51,9 @@ function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography color="inherit">TODOS WITH HOOKS</Typography>
+          <Typography color="inherit" component="h2" variant="h5">
+            Tasks
+          </Typography>
         </Toolbar>
       </AppBar>
     </div>
