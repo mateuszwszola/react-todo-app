@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
@@ -75,5 +76,10 @@ function Sidebar({ isOpen, toggleDrawer }) {
     </div>
   );
 }
+
+Sidebar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  toggleDrawer: PropTypes.func.isRequired
+};
 
 export default Sidebar;

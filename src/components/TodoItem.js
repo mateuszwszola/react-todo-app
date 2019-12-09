@@ -1,5 +1,6 @@
 import React, { useContext, memo } from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import useInputState from '../hooks/useInputState';
 import useToggleState from '../hooks/useToggleState';
 import {
@@ -17,7 +18,115 @@ import {
 import { ListItemSecondaryAction } from '@material-ui/core';
 import { TodosDispatchContext } from '../contexts/todosContext';
 
-function TodoItem({ todo }) {
+const useStyles = makeStyles(theme => ({
+  listItem: {
+    height: '64px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: theme.spacing(2)
+  },
+  container: {
+    width: '80%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: theme.spacing(2)
+  },
+  actionsContainer: {
+    width: '20%',
+    display: 'flex',
+    alignItems: 'center',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(1)
+  },
+  nobreak: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
+  todoText: {
+    textDecoration: props => (props.completed ? 'line-through' : 'none'),
+    cursor: 'pointer'
+  },
+  form: {
+    width: '90%',
+    margin: '0 auto'
+  }
+}));
+
+function TodoItem({
+  todo,
+  isEditting,
+  editTaskValue,
+  toggleIsEditting,
+  handleEditTaskSubmit,
+  handleToggleCompleted,
+  handleEditTaskValueChange,
+  handleRemoveTodo,
+  handleSaveTask
+}) {
+  const classes = useStyles({ completed: todo.completed });
+
+  return (
+    <ListItem className={classes.listItem}>
+      <div className={classes.container}>
+        {isEditting ? (
+          <form onSubmit={handleEditTaskSubmit} className={classes.form}>
+            <TextField
+              value={editTaskValue}
+              onChange={handleEditTaskValueChange}
+              autoFocus
+              fullWidth
+            />
+          </form>
+        ) : (
+          <>
+            <Checkbox
+              tabIndex={-1}
+              checked={todo.completed}
+              onChange={handleToggleCompleted}
+            />
+            <ListItemText
+              className={`${classes.nobreak} ${classes.todoText}`}
+              onClick={toggleIsEditting}
+            >
+              {todo.task}
+            </ListItemText>
+          </>
+        )}
+      </div>
+      <ListItemSecondaryAction className={classes.actionsContainer}>
+        {isEditting ? (
+          <IconButton onClick={handleSaveTask} aria-label="Save">
+            <DoneIcon />
+          </IconButton>
+        ) : (
+          <IconButton onClick={toggleIsEditting} aria-label="Edit">
+            <EditIcon />
+          </IconButton>
+        )}
+        <IconButton onClick={handleRemoveTodo} aria-label="Delete">
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  );
+}
+
+TodoItem.propTypes = {
+  todo: PropTypes.object.isRequired,
+  isEditting: PropTypes.bool.isRequired,
+  editTaskValue: PropTypes.string.isRequired,
+  toggleIsEditting: PropTypes.func.isRequired,
+  handleEditTaskSubmit: PropTypes.func.isRequired,
+  handleToggleCompleted: PropTypes.func.isRequired,
+  handleEditTaskValueChange: PropTypes.func.isRequired,
+  handleRemoveTodo: PropTypes.func.isRequired,
+  handleSaveTask: PropTypes.func.isRequired
+};
+
+function TodoItemContainer({ todo }) {
   const dispatch = useContext(TodosDispatchContext);
   const [isEditting, toggleIsEditting] = useToggleState(false);
   const [editTaskValue, handleEditTaskValueChange] = useInputState(todo.task);
@@ -46,54 +155,22 @@ function TodoItem({ todo }) {
   }
 
   return (
-    <ListItem style={{ height: '64px' }}>
-      {isEditting ? (
-        <form onSubmit={handleEditTaskSubmit}>
-          <TextField
-            label="Edit task"
-            value={editTaskValue}
-            onChange={handleEditTaskValueChange}
-            autoFocus
-          />
-        </form>
-      ) : (
-        <>
-          <Checkbox
-            tabIndex={-1}
-            checked={todo.completed}
-            onChange={handleToggleCompleted}
-          />
-          <ListItemText
-            onClick={toggleIsEditting}
-            style={{
-              textDecoration: todo.completed ? 'line-through' : 'none',
-              cursor: 'pointer'
-            }}
-          >
-            {todo.task}
-          </ListItemText>
-        </>
-      )}
-      <ListItemSecondaryAction>
-        {isEditting ? (
-          <IconButton onClick={handleSaveTask} aria-label="Save">
-            <DoneIcon />
-          </IconButton>
-        ) : (
-          <IconButton onClick={toggleIsEditting} aria-label="Edit">
-            <EditIcon />
-          </IconButton>
-        )}
-        <IconButton onClick={handleRemoveTodo} aria-label="Delete">
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
+    <TodoItem
+      todo={todo}
+      isEditting={isEditting}
+      editTaskValue={editTaskValue}
+      toggleIsEditting={toggleIsEditting}
+      handleEditTaskSubmit={handleEditTaskSubmit}
+      handleToggleCompleted={handleToggleCompleted}
+      handleEditTaskValueChange={handleEditTaskValueChange}
+      handleRemoveTodo={handleRemoveTodo}
+      handleSaveTask={handleSaveTask}
+    />
   );
 }
 
-TodoItem.propTypes = {
+TodoItemContainer.propTypes = {
   todo: PropTypes.object.isRequired
 };
 
-export default memo(TodoItem);
+export default memo(TodoItemContainer);
