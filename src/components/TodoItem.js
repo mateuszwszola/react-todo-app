@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import useInputState from '../hooks/useInputState';
@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function TodoItem({
+  todoRef,
   todo,
   isEditting,
   editTaskValue,
@@ -68,7 +69,7 @@ function TodoItem({
   const classes = useStyles({ completed: todo.completed });
 
   return (
-    <ListItem className={classes.listItem}>
+    <ListItem className={classes.listItem} ref={todoRef}>
       <div className={classes.container}>
         {isEditting ? (
           <form onSubmit={handleEditTaskSubmit} className={classes.form}>
@@ -129,6 +130,26 @@ function TodoItemContainer({ todo }) {
   const dispatch = useContext(TodosDispatchContext);
   const [isEditting, toggleIsEditting] = useToggleState(false);
   const [editTaskValue, handleEditTaskValueChange] = useInputState(todo.task);
+  const todoRef = useRef(null);
+
+  useEffect(() => {
+    function toggleEditOnEscape(event) {
+      if (
+        isEditting &&
+        event &&
+        event.type === 'keydown' &&
+        event.key === 'Escape'
+      ) {
+        toggleIsEditting();
+      }
+    }
+    if (isEditting) {
+      window.addEventListener('keydown', toggleEditOnEscape);
+      return () => {
+        window.removeEventListener('keydown', toggleEditOnEscape);
+      };
+    }
+  }, [isEditting]);
 
   function handleRemoveTodo() {
     dispatch({ type: 'REMOVE_TODO', todoId: todo.id });
@@ -155,6 +176,7 @@ function TodoItemContainer({ todo }) {
 
   return (
     <TodoItem
+      todoRef={todoRef}
       todo={todo}
       isEditting={isEditting}
       editTaskValue={editTaskValue}
