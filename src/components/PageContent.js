@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
     // backgroundPosition: 'center'
   },
   main: {
-    padding: 0
+    padding: 0,
+    height: '100%'
   }
 }));
 

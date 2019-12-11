@@ -8,16 +8,14 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
-  IconButton,
-  Typography
+  Divider
 } from '@material-ui/core';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import StarIcon from '@material-ui/icons/Star';
-import ListIcon from '@material-ui/icons/List';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import AddIcon from '@material-ui/icons/Add';
 import NavLink from './NavLink';
+import AddNewList from './AddNewList';
+import TodoListItem from './TodoListItem';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,9 +27,6 @@ const useStyles = makeStyles(theme => ({
   list: {
     width: 250,
     marginTop: theme.spacing(2)
-  },
-  formContainer: {
-    padding: theme.spacing(2)
   }
 }));
 
@@ -88,30 +83,16 @@ function Sidebar({ isOpen, toggleDrawer }) {
             <Divider />
             <List>
               {todoLists.map(list => (
-                <ListItem key={list.id}>
-                  <NavLink to={list.url}>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={list.name} />
-                  </NavLink>
-                </ListItem>
+                <TodoListItem
+                  key={list.id}
+                  id={list.id}
+                  name={list.name}
+                  url={list.url}
+                />
               ))}
             </List>
           </nav>
-          <div className={classes.formContainer}>
-            <IconButton>
-              <AddIcon />
-            </IconButton>
-            <Typography
-              style={{ marginLeft: '8px' }}
-              component="span"
-              variant="subtitle1"
-              color="textSecondary"
-            >
-              New list
-            </Typography>
-          </div>
+          <AddNewList />
         </div>
       </SwipeableDrawer>
     </div>
