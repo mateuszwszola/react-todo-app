@@ -10,7 +10,7 @@ function TodoForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (task !== '') {
-      dispatch({ type: 'ADD_TODO', task });
+      dispatch({ type: 'ADD_TODO', task, list: 'tasks' });
       handleReset();
     }
   }

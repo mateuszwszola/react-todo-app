@@ -5,7 +5,10 @@ export function getRandomId() {
 }
 
 export function addTodo(todos, task) {
-  return [...todos, { id: getRandomId(), task, completed: false }];
+  return [
+    ...todos,
+    { id: getRandomId(), task, completed: false, list: 'tasks' }
+  ];
 }
 
 export function removeTodo(todos, todoId) {

@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { TodoListsContext } from '../contexts/todoListsContext';
 import { makeStyles } from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
+import {
+  SwipeableDrawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  IconButton,
+  Typography
+} from '@material-ui/core';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import StarIcon from '@material-ui/icons/Star';
 import ListIcon from '@material-ui/icons/List';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
+import NavLink from './NavLink';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -32,24 +36,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Sidebar({ isOpen, toggleDrawer }) {
+  const todoLists = useContext(TodoListsContext);
   const classes = useStyles();
 
   const mainLists = [
     {
+      id: '1',
       text: 'Tasks',
-      icon: <AssignmentTurnedInIcon />
+      icon: <AssignmentTurnedInIcon />,
+      url: '/'
     },
     {
+      id: '2',
       text: 'Important',
-      icon: <StarIcon />
+      icon: <StarIcon />,
+      url: '/important'
     },
     {
+      id: '3',
       text: 'Planned',
-      icon: <CalendarTodayIcon />
+      icon: <CalendarTodayIcon />,
+      url: '/planned'
     }
   ];
-
-  const userLists = ['Work', 'Private', 'Groceries'];
 
   return (
     <div>
@@ -60,32 +69,36 @@ function Sidebar({ isOpen, toggleDrawer }) {
         disableBackdropTransition={true}
       >
         <div className={classes.container}>
-          <div
+          <nav
             className={classes.list}
             role="presentation"
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              {mainLists.map(item => (
-                <ListItem button key={item.text}>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
+              {mainLists.map(list => (
+                <ListItem key={list.id}>
+                  <NavLink to={list.url}>
+                    <ListItemIcon>{list.icon}</ListItemIcon>
+                    <ListItemText primary={list.text} />
+                  </NavLink>
                 </ListItem>
               ))}
             </List>
             <Divider />
             <List>
-              {userLists.map(text => (
-                <ListItem button key={text}>
-                  <ListItemIcon>
-                    <ListIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
+              {todoLists.map(list => (
+                <ListItem key={list.id}>
+                  <NavLink to={list.url}>
+                    <ListItemIcon>
+                      <ListIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={list.name} />
+                  </NavLink>
                 </ListItem>
               ))}
             </List>
-          </div>
+          </nav>
           <div className={classes.formContainer}>
             <IconButton>
               <AddIcon />

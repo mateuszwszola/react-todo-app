@@ -5,7 +5,12 @@ function todosReducer(state, action) {
     case 'ADD_TODO':
       return [
         ...state,
-        { id: getRandomId(), task: action.task, completed: false }
+        {
+          id: getRandomId(),
+          task: action.task,
+          completed: false,
+          list: action.list
+        }
       ];
     case 'REMOVE_TODO':
       return state.filter(todo => todo.id !== action.todoId);
@@ -21,6 +26,15 @@ function todosReducer(state, action) {
           ? {
               ...todo,
               task: action.newTask
+            }
+          : todo
+      );
+    case 'MOVE_TODO':
+      return state.map(todo =>
+        todo.id === action.todoId
+          ? {
+              ...todo,
+              list: action.newList
             }
           : todo
       );
