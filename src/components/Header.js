@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import { AppBar, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Sidebar from './Sidebar';
-import clsx from 'clsx';
+import HeaderListName from './HeaderListName';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -51,9 +52,7 @@ function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography color="inherit" component="h2" variant="h5">
-            Tasks
-          </Typography>
+          <HeaderListName />
         </Toolbar>
       </AppBar>
     </div>

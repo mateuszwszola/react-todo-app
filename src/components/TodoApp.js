@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function TodoApp() {
+function TodoApp(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>

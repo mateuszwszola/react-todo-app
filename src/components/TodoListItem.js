@@ -12,12 +12,12 @@ import {
 import ListIcon from '@material-ui/icons/List';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-function TodoListItem({ id, name, url }) {
+function TodoListItem({ id, name, url, toggleDrawer }) {
   const dispatch = useContext(TodoListsDispatchContext);
 
   return (
     <ListItem>
-      <NavLink to={url}>
+      <NavLink to={url} onClick={toggleDrawer(false)}>
         <ListItemIcon>
           <ListIcon />
         </ListItemIcon>
@@ -37,7 +37,8 @@ function TodoListItem({ id, name, url }) {
 TodoListItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
+  toggleDrawer: PropTypes.func.isRequired
 };
 
 export default TodoListItem;

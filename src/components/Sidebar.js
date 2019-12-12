@@ -67,13 +67,12 @@ function Sidebar({ isOpen, toggleDrawer }) {
           <nav
             className={classes.list}
             role="presentation"
-            onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
             <List>
               {mainLists.map(list => (
                 <ListItem key={list.id}>
-                  <NavLink to={list.url}>
+                  <NavLink to={list.url} onClick={toggleDrawer(false)}>
                     <ListItemIcon>{list.icon}</ListItemIcon>
                     <ListItemText primary={list.text} />
                   </NavLink>
@@ -84,6 +83,7 @@ function Sidebar({ isOpen, toggleDrawer }) {
             <List>
               {todoLists.map(list => (
                 <TodoListItem
+                  toggleDrawer={toggleDrawer}
                   key={list.id}
                   id={list.id}
                   name={list.name}
