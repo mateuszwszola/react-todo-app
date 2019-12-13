@@ -17,7 +17,7 @@ function AddNewList(props) {
 
   return (
     <div className={classes.addListContainer}>
-      <IconButton onClick={e => dispatch({ type: 'ADD_LIST', name: 'Name' })}>
+      <IconButton onClick={e => dispatch({ type: 'ADD_LIST', name: 'name' })}>
         <AddIcon />
       </IconButton>
       <Typography

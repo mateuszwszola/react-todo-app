@@ -8,12 +8,13 @@ function todoListsReducer(state, action) {
         {
           id: getRandomId(),
           name: action.name,
-          url: `/${action.name.toLowerCase()}`
+          url: `/${action.name.toLowerCase()}`,
+          role: 'custom'
         }
       ];
     case 'CHANGE_NAME':
       return state.map(list =>
-        list.id === action.listId
+        list.name === action.listName
           ? {
               ...list,
               name: action.newListName,

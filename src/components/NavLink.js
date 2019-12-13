@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@reach/router';
+import { NavLink as RouterNavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -16,19 +16,7 @@ const useStyles = makeStyles(theme => ({
 const NavLink = props => {
   const classes = useStyles();
 
-  return (
-    <Link
-      {...props}
-      className={classes.navLink}
-      getProps={({ isCurrent }) => {
-        return {
-          style: {
-            fontWeight: isCurrent ? 'bold' : 'normal'
-          }
-        };
-      }}
-    />
-  );
+  return <RouterNavLink {...props} className={classes.navLink} />;
 };
 
 export default NavLink;

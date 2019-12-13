@@ -2,18 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { TodoListsContext } from '../contexts/todoListsContext';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  SwipeableDrawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider
-} from '@material-ui/core';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import StarIcon from '@material-ui/icons/Star';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import NavLink from './NavLink';
+import { SwipeableDrawer, List, Divider } from '@material-ui/core';
 import AddNewList from './AddNewList';
 import TodoListItem from './TodoListItem';
 
@@ -34,26 +23,8 @@ function Sidebar({ isOpen, toggleDrawer }) {
   const todoLists = useContext(TodoListsContext);
   const classes = useStyles();
 
-  const mainLists = [
-    {
-      id: '1',
-      text: 'Tasks',
-      icon: <AssignmentTurnedInIcon />,
-      url: '/'
-    },
-    {
-      id: '2',
-      text: 'Important',
-      icon: <StarIcon />,
-      url: '/important'
-    },
-    {
-      id: '3',
-      text: 'Planned',
-      icon: <CalendarTodayIcon />,
-      url: '/planned'
-    }
-  ];
+  const mainLists = todoLists.filter(list => list.role === 'main');
+  const customLists = todoLists.filter(list => list.role === 'custom');
 
   return (
     <div>
@@ -71,23 +42,26 @@ function Sidebar({ isOpen, toggleDrawer }) {
           >
             <List>
               {mainLists.map(list => (
-                <ListItem key={list.id}>
-                  <NavLink to={list.url} onClick={toggleDrawer(false)}>
-                    <ListItemIcon>{list.icon}</ListItemIcon>
-                    <ListItemText primary={list.text} />
-                  </NavLink>
-                </ListItem>
-              ))}
-            </List>
-            <Divider />
-            <List>
-              {todoLists.map(list => (
                 <TodoListItem
-                  toggleDrawer={toggleDrawer}
                   key={list.id}
                   id={list.id}
                   name={list.name}
                   url={list.url}
+                  role={list.role}
+                  toggleDrawer={toggleDrawer}
+                />
+              ))}
+            </List>
+            <Divider />
+            <List>
+              {customLists.map(list => (
+                <TodoListItem
+                  key={list.id}
+                  id={list.id}
+                  name={list.name}
+                  url={list.url}
+                  role={list.role}
+                  toggleDrawer={toggleDrawer}
                 />
               ))}
             </List>

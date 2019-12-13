@@ -2,10 +2,10 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
+import { TodoListsProvider } from './contexts/todoListsContext';
 import PageContent from './components/PageContent';
 import TodoApp from './components/TodoApp';
-import { TodoListsProvider } from './contexts/todoListsContext';
-import { Router } from '@reach/router';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -14,10 +14,11 @@ function App() {
         <CssBaseline />
         <TodoListsProvider>
           <Router>
-            <PageContent path="/">
-              <TodoApp path="/:listName" />
-              <TodoApp default />
-            </PageContent>
+            <Route path="/:listName?">
+              <PageContent>
+                <TodoApp />
+              </PageContent>
+            </Route>
           </Router>
         </TodoListsProvider>
       </ThemeProvider>

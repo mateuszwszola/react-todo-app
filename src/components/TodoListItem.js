@@ -10,26 +10,49 @@ import {
   IconButton
 } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import StarIcon from '@material-ui/icons/Star';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { firstLetterUpper } from '../helpers';
+import { useHistory, useLocation } from 'react-router-dom';
 
-function TodoListItem({ id, name, url, toggleDrawer }) {
+const listIcons = {
+  tasks: <AssignmentTurnedInIcon />,
+  important: <StarIcon />,
+  planned: <CalendarTodayIcon />,
+  default: <ListIcon />
+};
+
+function TodoListItem({ id, name, url, role, toggleDrawer }) {
   const dispatch = useContext(TodoListsDispatchContext);
+  const history = useHistory();
+  const location = useLocation();
+
+  const { from } = location.state || { from: { pathname: '/' } };
+
+  function handleRemoveList(e) {
+    // dispatch remove action
+    dispatch({ type: 'REMOVE_LIST', listId: id });
+    // toggleDrawer
+    toggleDrawer(false)();
+    // redirect to main page
+    history.replace(from);
+  }
 
   return (
     <ListItem>
       <NavLink to={url} onClick={toggleDrawer(false)}>
-        <ListItemIcon>
-          <ListIcon />
-        </ListItemIcon>
-        <ListItemText primary={name} />
+        <ListItemIcon>{listIcons[name] || listIcons.default}</ListItemIcon>
+        <ListItemText primary={firstLetterUpper(name)} />
       </NavLink>
-      <ListItemSecondaryAction>
-        <IconButton
-          onClick={e => dispatch({ type: 'REMOVE_LIST', listId: id })}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
+      {role === 'custom' && (
+        <ListItemSecondaryAction>
+          <IconButton onClick={handleRemoveList}>
+            <DeleteIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      )}
     </ListItem>
   );
 }
@@ -38,6 +61,7 @@ TodoListItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
   toggleDrawer: PropTypes.func.isRequired
 };
 

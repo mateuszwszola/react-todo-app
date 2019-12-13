@@ -4,6 +4,10 @@ export function getRandomId() {
   return uuid.v4();
 }
 
+export function firstLetterUpper(str) {
+  return str[0].toUpperCase() + str.slice(1);
+}
+
 export function addTodo(todos, task) {
   return [
     ...todos,

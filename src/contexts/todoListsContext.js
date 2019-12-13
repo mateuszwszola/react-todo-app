@@ -5,18 +5,39 @@ import useLocalStorageReducer from '../hooks/useLocalStorageReducer';
 const initialLists = [
   {
     id: '1',
-    name: 'Work',
-    url: '/work'
+    name: 'tasks',
+    url: '/',
+    role: 'main'
   },
   {
     id: '2',
-    name: 'Private',
-    url: '/private'
+    name: 'important',
+    url: '/important',
+    role: 'main'
   },
   {
     id: '3',
-    name: 'Groceries',
-    url: '/groceries'
+    name: 'planned',
+    url: '/planned',
+    role: 'main'
+  },
+  {
+    id: '4',
+    name: 'work',
+    url: '/work',
+    role: 'custom'
+  },
+  {
+    id: '5',
+    name: 'private',
+    url: '/private',
+    role: 'custom'
+  },
+  {
+    id: '6',
+    name: 'groceries',
+    url: '/groceries',
+    role: 'custom'
   }
 ];
 
