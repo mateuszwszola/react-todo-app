@@ -9,7 +9,7 @@ function todosReducer(state, action) {
           id: getRandomId(),
           task: action.task,
           completed: false,
-          list: action.list
+          listId: action.listId
         }
       ];
     case 'REMOVE_TODO':

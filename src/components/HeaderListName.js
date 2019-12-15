@@ -1,46 +1,77 @@
-import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { Typography, TextField } from '@material-ui/core';
-import { TodoListsDispatchContext } from '../contexts/todoListsContext';
-import useInputState from '../hooks/useInputState';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Typography, Input } from '@material-ui/core';
 import useToggleState from '../hooks/useToggleState';
-import { firstLetterUpper } from '../helpers';
+import useLocationListName from '../hooks/useLocationListName';
+import {
+  TodoListsDispatchContext,
+  TodoListsContext
+} from '../contexts/todoListsContext';
+import slugify from 'slugify';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  capitalize: {
+    textTransform: 'capitalize'
+  },
+  editInput: {
+    color: 'white',
+    fontSize: '1.5rem',
+    textTransform: 'capitalize'
+  }
+}));
 
 function HeaderListName(props) {
-  let { listName } = useParams();
-  listName = listName || 'tasks';
+  const history = useHistory();
   const dispatch = useContext(TodoListsDispatchContext);
+  const todoLists = useContext(TodoListsContext);
+  const listName = useLocationListName();
+  const classes = useStyles();
   const [isEdit, toggleIsEdit] = useToggleState(false);
-  const [listNameVal, handleListNameValChange] = useInputState(listName);
+  const [listNameVal, setListNameVal] = useState(listName);
+  const handleListNameValChange = e => setListNameVal(e.target.value);
+
+  const currentList = todoLists.find(list => list.name === listName);
+
+  useEffect(() => {
+    setListNameVal(listName);
+  }, [listName]);
 
   return (
-    <Typography color="inherit" component="h2" variant="h5">
-      {isEdit ? (
+    <>
+      {isEdit && currentList.role === 'custom' ? (
         <form
           onSubmit={e => {
-            console.log({
-              listName,
-              listNameVal
-            });
             e.preventDefault();
-            dispatch({
-              type: 'CHANGE_NAME',
-              listName,
-              newListName: listNameVal
-            });
+            if (listName !== listNameVal) {
+              dispatch({
+                type: 'CHANGE_NAME',
+                listName,
+                newListName: listNameVal.toLowerCase()
+              });
+              history.push(slugify(listNameVal.toLowerCase()));
+            }
             toggleIsEdit();
           }}
         >
-          <TextField
+          <Input
+            required
+            className={classes.editInput}
             value={listNameVal}
             onChange={handleListNameValChange}
-            autoFocus
           />
         </form>
       ) : (
-        <span onClick={toggleIsEdit}>{firstLetterUpper(listName)}</span>
+        <Typography
+          className={classes.capitalize}
+          onClick={() => currentList.role === 'custom' && toggleIsEdit()}
+          component="h2"
+          variant="h5"
+        >
+          {listName}
+        </Typography>
       )}
-    </Typography>
+    </>
   );
 }
 

@@ -3,8 +3,8 @@ import todosReducer from '../reducers/todosReducer';
 import useLocalStorageReducer from '../hooks/useLocalStorageReducer';
 
 const initialTodos = [
-  { id: 1, task: 'Practice React Hooks', completed: true, list: 'tasks' },
-  { id: 2, task: 'Build an amazing app', completed: false, list: 'tasks' }
+  { id: 1, task: 'Practice React Hooks', completed: true, listId: '1' },
+  { id: 2, task: 'Build an amazing app', completed: true, listId: '1' }
 ];
 
 const TodosContext = createContext();

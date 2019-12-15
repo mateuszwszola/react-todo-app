@@ -1,4 +1,5 @@
 import { getRandomId } from '../helpers';
+import slugify from 'slugify';
 
 function todoListsReducer(state, action) {
   switch (action.type) {
@@ -8,7 +9,7 @@ function todoListsReducer(state, action) {
         {
           id: getRandomId(),
           name: action.name,
-          url: `/${action.name.toLowerCase()}`,
+          url: `/${slugify(action.name.toLowerCase())}`,
           role: 'custom'
         }
       ];
@@ -18,7 +19,7 @@ function todoListsReducer(state, action) {
           ? {
               ...list,
               name: action.newListName,
-              url: `/${action.newListName.toLowerCase()}`
+              url: `/${slugify(action.newListName.toLowerCase())}`
             }
           : list
       );

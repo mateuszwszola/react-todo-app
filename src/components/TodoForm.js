@@ -1,18 +1,28 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
 import useInputState from '../hooks/useInputState';
 import { Paper, TextField } from '@material-ui/core';
 import { TodosDispatchContext } from '../contexts/todosContext';
+import { TodoListsContext } from '../contexts/todoListsContext';
+import useLocationListName from '../hooks/useLocationListName';
 
 function TodoForm() {
   const dispatch = useContext(TodosDispatchContext);
-  const { listName } = useParams();
+  const todoLists = useContext(TodoListsContext);
+  const listName = useLocationListName();
   const [task, handleTaskChange, handleReset] = useInputState('');
+
+  let listId;
+  const list = todoLists.find(list => list.name === listName);
+  if (list) {
+    listId = list.id;
+  } else {
+    listId = '1';
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (task !== '') {
-      dispatch({ type: 'ADD_TODO', task, list: listName || 'tasks' });
+      dispatch({ type: 'ADD_TODO', task, listId });
       handleReset();
     }
   }

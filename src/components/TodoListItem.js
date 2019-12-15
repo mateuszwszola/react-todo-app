@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory, useLocation } from 'react-router-dom';
 import { TodoListsDispatchContext } from '../contexts/todoListsContext';
-import NavLink from './NavLink';
 import {
   ListItem,
   ListItemIcon,
@@ -14,8 +14,14 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import StarIcon from '@material-ui/icons/Star';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { firstLetterUpper } from '../helpers';
-import { useHistory, useLocation } from 'react-router-dom';
+import NavLink from './NavLink';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  capitalize: {
+    textTransform: 'capitalize'
+  }
+}));
 
 const listIcons = {
   tasks: <AssignmentTurnedInIcon />,
@@ -28,15 +34,13 @@ function TodoListItem({ id, name, url, role, toggleDrawer }) {
   const dispatch = useContext(TodoListsDispatchContext);
   const history = useHistory();
   const location = useLocation();
+  const classes = useStyles();
 
   const { from } = location.state || { from: { pathname: '/' } };
 
   function handleRemoveList(e) {
-    // dispatch remove action
     dispatch({ type: 'REMOVE_LIST', listId: id });
-    // toggleDrawer
     toggleDrawer(false)();
-    // redirect to main page
     history.replace(from);
   }
 
@@ -44,7 +48,7 @@ function TodoListItem({ id, name, url, role, toggleDrawer }) {
     <ListItem>
       <NavLink to={url} onClick={toggleDrawer(false)}>
         <ListItemIcon>{listIcons[name] || listIcons.default}</ListItemIcon>
-        <ListItemText primary={firstLetterUpper(name)} />
+        <ListItemText className={classes.capitalize} primary={name} />
       </NavLink>
       {role === 'custom' && (
         <ListItemSecondaryAction>
