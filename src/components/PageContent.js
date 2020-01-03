@@ -3,6 +3,7 @@ import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Footer from './Footer';
+import image from '../img/desk-background.jpg';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,10 +14,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fafafa',
     padding: 0,
     margin: 0,
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: `url(${image})`, // Photo by Dustin Lee on Unsplash
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'bottom'
   },
   main: {
     padding: 0,
