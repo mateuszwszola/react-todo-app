@@ -11,13 +11,9 @@ function TodoForm() {
   const listName = useLocationListName();
   const [task, handleTaskChange, handleReset] = useInputState('');
 
-  let listId;
   const list = todoLists.find(list => list.name === listName);
-  if (list) {
-    listId = list.id;
-  } else {
-    listId = '1';
-  }
+  const listId = list ? list.id : '1';
+  console.log({ list, listId, listName });
 
   function handleSubmit(e) {
     e.preventDefault();

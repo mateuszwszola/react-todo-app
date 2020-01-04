@@ -11,13 +11,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function AddNewList(props) {
+function AddNewList({ isEdit, setIsEdit }) {
   const dispatch = useContext(TodoListsDispatchContext);
   const classes = useStyles();
 
+  const handleIconClick = () => {
+    if (!isEdit) {
+      dispatch({ type: 'ADD_LIST', name: 'name' });
+      setIsEdit(true);
+    }
+  };
+
   return (
     <div className={classes.addListContainer}>
-      <IconButton onClick={e => dispatch({ type: 'ADD_LIST', name: 'name' })}>
+      <IconButton onClick={handleIconClick}>
         <AddIcon />
       </IconButton>
       <Typography

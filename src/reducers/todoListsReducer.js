@@ -15,7 +15,7 @@ function todoListsReducer(state, action) {
       ];
     case 'CHANGE_NAME':
       return state.map(list =>
-        list.name === action.listName
+        list.id === action.listId
           ? {
               ...list,
               name: action.newListName,

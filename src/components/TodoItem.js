@@ -149,7 +149,7 @@ function TodoItemContainer({ todo }) {
         window.removeEventListener('keydown', toggleEditOnEscape);
       };
     }
-  }, [isEditting]);
+  }, [toggleIsEditting, isEditting]);
 
   function handleRemoveTodo() {
     dispatch({ type: 'REMOVE_TODO', todoId: todo.id });

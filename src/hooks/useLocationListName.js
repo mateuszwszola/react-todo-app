@@ -9,7 +9,9 @@ function useLocationListName(props) {
   listName = listName || 'tasks';
 
   // find list with listName url and get the name
-  const list = todoLists.find(list => list.url === '/' + slugify(listName));
+  const list = todoLists.find(
+    list => list.url === '/' + slugify(listName.toLowerCase())
+  );
   return list ? list.name : listName;
 }
 

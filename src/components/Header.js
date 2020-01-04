@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { AppBar, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Menu as MenuIcon, Edit as EditIcon } from '@material-ui/icons';
 import Sidebar from './Sidebar';
 import HeaderListName from './HeaderListName';
 
@@ -19,6 +19,9 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2)
+  },
+  editButton: {
+    marginLeft: theme.spacing(2)
   }
 }));
 
@@ -42,7 +45,7 @@ function Header(props) {
     <div>
       <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
       <AppBar color="primary" position="static" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -53,6 +56,15 @@ function Header(props) {
             <MenuIcon />
           </IconButton>
           <HeaderListName />
+
+          <IconButton
+            color="inherit"
+            aria-label="edit todo list name"
+            onClick={() => alert('edit todo list name')}
+            className={classes.editButton}
+          >
+            <EditIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>

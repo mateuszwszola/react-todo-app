@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { SwipeableDrawer, List, Divider } from '@material-ui/core';
 import { TodoListsContext } from '../contexts/todoListsContext';
 import AddNewList from './AddNewList';
-import TodoListItem from './TodoListItem';
+import CustomListSidebarItem from './CustomListSidebarItem';
+import MainListSidebarItem from './MainListSidebarItem';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles(theme => ({
 function Sidebar({ isOpen, toggleDrawer }) {
   const todoLists = useContext(TodoListsContext);
   const classes = useStyles();
+  const [isEdit, setIsEdit] = useState(false);
 
   const mainLists = todoLists.filter(list => list.role === 'main');
   const customLists = todoLists.filter(list => list.role === 'custom');
@@ -42,32 +44,31 @@ function Sidebar({ isOpen, toggleDrawer }) {
           >
             <List>
               {mainLists.map(list => (
-                <TodoListItem
+                <MainListSidebarItem
                   key={list.id}
-                  id={list.id}
                   name={list.name}
                   url={list.url}
-                  role={list.role}
                   toggleDrawer={toggleDrawer}
                 />
               ))}
             </List>
             <Divider />
             <List className={classes.scrolledList}>
-              {customLists.map(list => (
-                <TodoListItem
-                  focusedInput
+              {customLists.map((list, index) => (
+                <CustomListSidebarItem
                   key={list.id}
                   id={list.id}
                   name={list.name}
                   url={list.url}
                   role={list.role}
                   toggleDrawer={toggleDrawer}
+                  isEdit={isEdit}
+                  setIsEdit={setIsEdit}
                 />
               ))}
             </List>
           </nav>
-          <AddNewList />
+          <AddNewList isEdit={isEdit} setIsEdit={setIsEdit} />
         </div>
       </SwipeableDrawer>
     </div>
