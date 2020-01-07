@@ -10,12 +10,13 @@ import MainListSidebarItem from './MainListSidebarItem';
 const useStyles = makeStyles(theme => ({
   container: {
     height: '100%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
   list: {
-    width: 250,
+    width: '100%',
     marginTop: theme.spacing(1)
   }
 }));
@@ -54,7 +55,7 @@ function Sidebar({ isOpen, toggleDrawer }) {
             </List>
             <Divider />
             <List className={classes.scrolledList}>
-              {customLists.map((list, index) => (
+              {customLists.map(list => (
                 <CustomListSidebarItem
                   key={list.id}
                   id={list.id}

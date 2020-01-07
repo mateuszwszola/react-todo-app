@@ -1,7 +1,45 @@
 import uuid from 'uuid';
 
 export function getRandomId() {
-  return uuid.v4();
+  return uuid.v4().replace(/-/g, '');
+}
+
+export function extractListIdFromUrl(url) {
+  return url.split('-').reverse()[0];
+}
+
+export function createInitialTodoLists() {
+  function createInitialTodoList(names, role) {
+    return names.map(name => {
+      if (role === 'main') {
+        return {
+          id: name,
+          name,
+          url: name === 'tasks' ? '/' : `/${name}`,
+          role
+        };
+      } else {
+        const id = getRandomId();
+
+        return {
+          id: `${name}-${id}`,
+          name,
+          url: `/${name}-${id}`,
+          role
+        };
+      }
+    });
+  }
+
+  const mainLists = createInitialTodoList(
+    ['tasks', 'important', 'planned'],
+    'main'
+  );
+  const customLists = createInitialTodoList(
+    ['work', 'private', 'groceries'],
+    'custom'
+  );
+  return [...mainLists, ...customLists];
 }
 
 export function firstLetterUpper(str) {

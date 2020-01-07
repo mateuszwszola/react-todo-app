@@ -3,28 +3,32 @@ import slugify from 'slugify';
 
 function todoListsReducer(state, action) {
   switch (action.type) {
-    case 'ADD_LIST':
+    case 'ADD_LIST': {
+      const randomId = getRandomId();
       return [
         ...state,
         {
-          id: getRandomId(),
+          id: randomId,
           name: action.name,
-          url: `/${slugify(action.name.toLowerCase())}`,
+          url: `/${slugify(action.name)}-${randomId}`,
           role: 'custom'
         }
       ];
-    case 'CHANGE_NAME':
+    }
+    case 'CHANGE_NAME': {
       return state.map(list =>
-        list.id === action.listId
+        list.id === action.id
           ? {
               ...list,
-              name: action.newListName,
-              url: `/${slugify(action.newListName.toLowerCase())}`
+              name: action.name,
+              url: `/${slugify(action.name)}-${list.id}`
             }
           : list
       );
-    case 'REMOVE_LIST':
-      return state.filter(list => list.id !== action.listId);
+    }
+    case 'REMOVE_LIST': {
+      return state.filter(list => list.id !== action.id);
+    }
     default:
       return state;
   }

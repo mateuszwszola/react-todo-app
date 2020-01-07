@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: `url(${image})`, // Photo by Dustin Lee on Unsplash
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    backgroundPosition: 'bottom'
+    backgroundPosition: 'center'
   },
   main: {
     padding: 0,

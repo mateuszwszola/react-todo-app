@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import todoListsReducer from '../reducers/todoListsReducer';
 import useLocalStorageReducer from '../hooks/useLocalStorageReducer';
-import initialLists from '../initialTodoLists';
+import { createInitialTodoLists } from '../helpers';
 
 const TodoListsContext = createContext();
 const TodoListsDispatchContext = createContext();
@@ -9,7 +9,7 @@ const TodoListsDispatchContext = createContext();
 function TodoListsProvider(props) {
   const [todoLists, dispatch] = useLocalStorageReducer(
     'todoLists',
-    initialLists,
+    createInitialTodoLists(),
     todoListsReducer
   );
 

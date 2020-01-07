@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { AppBar, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import { Menu as MenuIcon, Edit as EditIcon } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
 import Sidebar from './Sidebar';
 import HeaderListName from './HeaderListName';
 
@@ -19,9 +19,6 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2)
-  },
-  editButton: {
-    marginLeft: theme.spacing(2)
   }
 }));
 
@@ -33,7 +30,7 @@ function Header(props) {
     if (
       event &&
       event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      (event.key === 'Tab' || event.key === 'Shift' || event.key === 'Enter')
     ) {
       return;
     }
@@ -56,15 +53,6 @@ function Header(props) {
             <MenuIcon />
           </IconButton>
           <HeaderListName />
-
-          <IconButton
-            color="inherit"
-            aria-label="edit todo list name"
-            onClick={() => alert('edit todo list name')}
-            className={classes.editButton}
-          >
-            <EditIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
     </div>

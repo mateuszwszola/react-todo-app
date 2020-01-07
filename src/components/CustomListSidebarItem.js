@@ -11,8 +11,8 @@ import {
 } from '@material-ui/core';
 import { List as ListIcon } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
-import NavLink from './NavLink';
 import { makeStyles } from '@material-ui/core/styles';
+import NavLink from './NavLink';
 
 const useStyles = makeStyles(theme => ({
   capitalize: {
@@ -29,8 +29,7 @@ function CustomListSidebarItem({ id, name, url, toggleDrawer }) {
   const { from } = location.state || { from: { pathname: '/' } };
 
   function handleRemoveList(e) {
-    dispatch({ type: 'REMOVE_LIST', listId: id });
-    toggleDrawer(false)();
+    dispatch({ type: 'REMOVE_LIST', id });
     history.replace(from);
   }
 

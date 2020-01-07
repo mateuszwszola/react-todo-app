@@ -1,36 +1,36 @@
 export default [
   {
-    id: '1',
+    id: 'tasks-1',
     name: 'tasks',
     url: '/',
     role: 'main'
   },
   {
-    id: '2',
+    id: 'important-2',
     name: 'important',
     url: '/important',
     role: 'main'
   },
   {
-    id: '3',
+    id: 'planned-3',
     name: 'planned',
     url: '/planned',
     role: 'main'
   },
   {
-    id: '4',
+    id: 'work-4',
     name: 'work',
     url: '/work',
     role: 'custom'
   },
   {
-    id: '5',
+    id: 'private-5',
     name: 'private',
     url: '/private',
     role: 'custom'
   },
   {
-    id: '6',
+    id: 'groceries6',
     name: 'groceries',
     url: '/groceries',
     role: 'custom'

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import useInputState from '../hooks/useInputState';
 import { Paper, TextField } from '@material-ui/core';
 import { TodosDispatchContext } from '../contexts/todosContext';
@@ -13,7 +13,14 @@ function TodoForm() {
 
   const list = todoLists.find(list => list.name === listName);
   const listId = list ? list.id : '1';
-  console.log({ list, listId, listName });
+
+  useEffect(() => {
+    function handleKeyDownPress(e) {
+      console.log(e);
+    }
+    window.addEventListener('keydown', handleKeyDownPress);
+    return window.removeEventListener('keydown', handleKeyDownPress);
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();

@@ -2,7 +2,7 @@ import { getRandomId } from '../helpers';
 
 function todosReducer(state, action) {
   switch (action.type) {
-    case 'ADD_TODO':
+    case 'ADD_TODO': {
       return [
         ...state,
         {
@@ -12,32 +12,35 @@ function todosReducer(state, action) {
           listId: action.listId
         }
       ];
-    case 'REMOVE_TODO':
-      return state.filter(todo => todo.id !== action.todoId);
-    case 'TOGGLE_COMPLETED':
+    }
+    case 'REMOVE_TODO': {
+      return state.filter(todo => todo.id !== action.id);
+    }
+    case 'TOGGLE_COMPLETED': {
       return state.map(todo =>
-        todo.id === action.todoId
-          ? { ...todo, completed: !todo.completed }
-          : todo
+        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
       );
-    case 'EDIT_TODO':
+    }
+    case 'EDIT_TODO': {
       return state.map(todo =>
-        todo.id === action.todoId
+        todo.id === action.id
           ? {
               ...todo,
-              task: action.newTask
+              task: action.task
             }
           : todo
       );
-    case 'MOVE_TODO':
+    }
+    case 'MOVE_TODO': {
       return state.map(todo =>
-        todo.id === action.todoId
+        todo.id === action.id
           ? {
               ...todo,
-              list: action.newList
+              listId: action.listId
             }
           : todo
       );
+    }
     default:
       return state;
   }
