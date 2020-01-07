@@ -21,7 +21,7 @@ const listIcons = {
   default: <ListIcon />
 };
 
-function MainListSidebarItem({ name, url, toggleDrawer }) {
+function MainListNavItem({ name, url, toggleDrawer }) {
   const classes = useStyles();
 
   return (
@@ -34,10 +34,10 @@ function MainListSidebarItem({ name, url, toggleDrawer }) {
   );
 }
 
-MainListSidebarItem.propTypes = {
+MainListNavItem.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   toggleDrawer: PropTypes.func.isRequired
 };
 
-export default MainListSidebarItem;
+export default MainListNavItem;

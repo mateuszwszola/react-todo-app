@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
-import { TodoListsDispatchContext } from '../contexts/todoListsContext';
+import { TodoListsDispatchContext } from '../../contexts/todoListsContext';
 import {
   ListItem,
   ListItemIcon,
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CustomListSidebarItem({ id, name, url, toggleDrawer }) {
+function CustomListNavItem({ id, name, url, toggleDrawer }) {
   const dispatch = useContext(TodoListsDispatchContext);
   const history = useHistory();
   const location = useLocation();
@@ -50,11 +50,11 @@ function CustomListSidebarItem({ id, name, url, toggleDrawer }) {
   );
 }
 
-CustomListSidebarItem.propTypes = {
+CustomListNavItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   toggleDrawer: PropTypes.func.isRequired
 };
 
-export default CustomListSidebarItem;
+export default CustomListNavItem;
