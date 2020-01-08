@@ -16,7 +16,7 @@ I have added additional features:
 
 ## Deployed version
 
-You can see the deployed version of the app [here](https://inspiring-turing-44f899.netlify.com/)
+You can see the deployed version of the app [here](https://adoring-chandrasekhar-3db32a.netlify.com/)
 
 ## Getting Started
 
