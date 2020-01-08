@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function useInputState(initialValue) {
   const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   function handleChange(e) {
     setValue(e.target.value);
   }
 
   function handleReset() {
-    setValue('');
+    setValue(initialValue);
   }
 
   return [value, handleChange, handleReset];

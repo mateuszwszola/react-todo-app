@@ -1,22 +1,22 @@
 import React, { useContext, memo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import useInputState from '../hooks/useInputState';
-import useToggleState from '../hooks/useToggleState';
 import {
   ListItem,
   ListItemText,
   Checkbox,
   IconButton,
-  TextField
+  TextField,
+  ListItemSecondaryAction
 } from '@material-ui/core';
 import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   Done as DoneIcon
 } from '@material-ui/icons';
-import { ListItemSecondaryAction } from '@material-ui/core';
 import { TodosDispatchContext } from '../contexts/todosContext';
+import useInputState from '../hooks/useInputState';
+import useToggleState from '../hooks/useToggleState';
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -152,11 +152,11 @@ function TodoItemContainer({ todo }) {
   }, [toggleIsEditting, isEditting]);
 
   function handleRemoveTodo() {
-    dispatch({ type: 'REMOVE_TODO', todoId: todo.id });
+    dispatch({ type: 'REMOVE_TODO', id: todo.id });
   }
 
   function handleToggleCompleted() {
-    dispatch({ type: 'TOGGLE_COMPLETED', todoId: todo.id });
+    dispatch({ type: 'TOGGLE_COMPLETED', id: todo.id });
     if (isEditting) {
       toggleIsEditting();
     }
@@ -164,7 +164,7 @@ function TodoItemContainer({ todo }) {
 
   function handleSaveTask() {
     if (editTaskValue && editTaskValue !== todo.task) {
-      dispatch({ type: 'EDIT_TODO', todoId: todo.id, newTask: editTaskValue });
+      dispatch({ type: 'EDIT_TODO', id: todo.id, task: editTaskValue });
     }
     toggleIsEditting();
   }

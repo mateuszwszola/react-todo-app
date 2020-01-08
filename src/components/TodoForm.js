@@ -1,31 +1,26 @@
 import React, { useContext, useEffect } from 'react';
-import useInputState from '../hooks/useInputState';
 import { Paper, TextField } from '@material-ui/core';
 import { TodosDispatchContext } from '../contexts/todosContext';
-import { TodoListsContext } from '../contexts/todoListsContext';
-import useLocationListName from '../hooks/useLocationListName';
+import useInputState from '../hooks/useInputState';
+import useLocationCurrentList from '../hooks/useLocationCurrentList';
 
 function TodoForm() {
   const dispatch = useContext(TodosDispatchContext);
-  const todoLists = useContext(TodoListsContext);
-  const listName = useLocationListName();
   const [task, handleTaskChange, handleReset] = useInputState('');
-
-  const list = todoLists.find(list => list.name === listName);
-  const listId = list ? list.id : '1';
+  const currentList = useLocationCurrentList();
 
   useEffect(() => {
     function handleKeyDownPress(e) {
       console.log(e);
     }
-    window.addEventListener('keydown', handleKeyDownPress);
-    return window.removeEventListener('keydown', handleKeyDownPress);
+    document.addEventListener('keydown', handleKeyDownPress);
+    return document.removeEventListener('keydown', handleKeyDownPress);
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (task !== '') {
-      dispatch({ type: 'ADD_TODO', task, listId });
+      dispatch({ type: 'ADD_TODO', task, listId: currentList.id });
       handleReset();
     }
   }

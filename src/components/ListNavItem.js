@@ -30,15 +30,7 @@ const listIcons = {
   default: <ListIcon />
 };
 
-function TodoListItem({
-  id,
-  name,
-  url,
-  role,
-  toggleDrawer,
-  isEdit,
-  setIsEdit
-}) {
+function ListNavItem({ id, name, url, role, toggleDrawer, isEdit, setIsEdit }) {
   const dispatch = useContext(TodoListsDispatchContext);
   const history = useHistory();
   const location = useLocation();
@@ -77,7 +69,7 @@ function TodoListItem({
   );
 }
 
-TodoListItem.propTypes = {
+ListNavItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
@@ -85,4 +77,4 @@ TodoListItem.propTypes = {
   toggleDrawer: PropTypes.func.isRequired
 };
 
-export default TodoListItem;
+export default ListNavItem;

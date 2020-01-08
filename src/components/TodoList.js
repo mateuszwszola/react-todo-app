@@ -1,21 +1,12 @@
 import React, { useContext } from 'react';
-import TodoItem from './TodoItem';
 import { Paper, List, Divider } from '@material-ui/core';
+import TodoItem from './TodoItem';
 import { TodosContext } from '../contexts/todosContext';
-import { TodoListsContext } from '../contexts/todoListsContext';
-import useLocationListName from '../hooks/useLocationListName';
+import useLocationCurrentList from '../hooks/useLocationCurrentList';
 
 function TodoList() {
-  let todos = useContext(TodosContext);
-  const todoLists = useContext(TodoListsContext);
-  const listName = useLocationListName();
-  // find listId based on current location (viewed list)
-  let listId;
-  const list = todoLists.find(list => list.name === listName);
-  if (list) {
-    listId = list.id;
-  }
-
+  const todos = useContext(TodosContext);
+  const listId = useLocationCurrentList().id;
   // filter todos by location
   const filteredTodos = todos.filter(todo => todo.listId === listId);
 
@@ -26,7 +17,7 @@ function TodoList() {
   return (
     <Paper>
       <List>
-        {todos.length > 0 && (
+        {filteredTodos.length > 0 && (
           <>
             {filteredTodos.map((todo, idx) => (
               <React.Fragment key={todo.id}>

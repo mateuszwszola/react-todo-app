@@ -14,7 +14,7 @@ function App() {
         <CssBaseline />
         <TodoListsProvider>
           <Router>
-            <Route path="/:listId?">
+            <Route path="/:listUrl?">
               <PageContent>
                 <TodoApp />
               </PageContent>

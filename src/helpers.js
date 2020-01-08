@@ -5,7 +5,7 @@ export function getRandomId() {
 }
 
 export function extractListIdFromUrl(url) {
-  return url.split('-').reverse()[0];
+  return url ? url.split('-').reverse()[0] : null;
 }
 
 export function createInitialTodoLists() {
@@ -22,7 +22,7 @@ export function createInitialTodoLists() {
         const id = getRandomId();
 
         return {
-          id: `${name}-${id}`,
+          id,
           name,
           url: `/${name}-${id}`,
           role
