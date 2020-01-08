@@ -11,20 +11,20 @@ import {
 } from '@material-ui/core';
 import { List as ListIcon } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import NavLink from './NavLink';
 
-// const useStyles = makeStyles(theme => ({
-//   capitalize: {
-//     textTransform: 'capitalize'
-//   }
-// }));
+const useStyles = makeStyles(theme => ({
+  capitalize: {
+    textTransform: 'capitalize'
+  }
+}));
 
 function CustomListNavItem({ id, name, url, toggleDrawer }) {
   const dispatch = useContext(TodoListsDispatchContext);
   const history = useHistory();
   const location = useLocation();
-  // const classes = useStyles();
+  const classes = useStyles();
 
   const { from } = location.state || { from: { pathname: '/' } };
 
@@ -39,7 +39,7 @@ function CustomListNavItem({ id, name, url, toggleDrawer }) {
         <ListItemIcon>
           <ListIcon />
         </ListItemIcon>
-        <ListItemText primary={name} />
+        <ListItemText primary={name} className={classes.capitalize} />
       </NavLink>
       <ListItemSecondaryAction>
         <IconButton onClick={handleRemoveList}>

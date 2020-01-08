@@ -1,6 +1,8 @@
 # React Todo App
 
-React Todo App built with React Hooks, Context and Material-UI
+React Todo App built with React (Hooks, Context, Router) and Material-UI
+
+You can create and manage to-do lists and items inside them
 
 The initial app was built through the course on Udemy called "The Modern React Bootcamp (Hooks, Context, NextJS, Router)
 

@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
 function HeaderListName({
   isEdit,
   toggleIsEdit,
-  currentList,
+  role,
+  listName,
   handleSaveListName,
   inputRef,
   listNameVal,
@@ -40,7 +41,7 @@ function HeaderListName({
 
   return (
     <>
-      {isEdit && currentList.role === 'custom' ? (
+      {isEdit && role === 'custom' ? (
         <>
           <form
             onSubmit={e => {
@@ -68,10 +69,14 @@ function HeaderListName({
         </>
       ) : (
         <>
-          <Typography component="h2" variant="h5">
-            {currentList.name}
+          <Typography
+            component="h2"
+            variant="h5"
+            className={classes.capitalize}
+          >
+            {listName}
           </Typography>
-          {currentList.role === 'custom' && (
+          {role === 'custom' && (
             <IconButton
               color="inherit"
               aria-label="edit todo list name"
@@ -90,7 +95,8 @@ function HeaderListName({
 HeaderListName.propTypes = {
   isEdit: PropTypes.bool.isRequired,
   toggleIsEdit: PropTypes.func.isRequired,
-  currentList: PropTypes.object.isRequired,
+  listName: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
   handleSaveListName: PropTypes.func.isRequired,
   inputRef: PropTypes.object.isRequired,
   listNameVal: PropTypes.string.isRequired,
@@ -145,7 +151,8 @@ function HeaderListNameContainer() {
     <HeaderListName
       isEdit={isEdit}
       toggleIsEdit={toggleIsEdit}
-      currentList={currentList}
+      role={currentList.role}
+      listName={currentList.name}
       handleSaveListName={handleSaveListName}
       inputRef={inputRef}
       listNameVal={listNameVal}

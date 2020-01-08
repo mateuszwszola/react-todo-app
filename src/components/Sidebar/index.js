@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { SwipeableDrawer } from '@material-ui/core';
@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
 function Sidebar({ isOpen, toggleDrawer }) {
   const todoLists = useContext(TodoListsContext);
   const classes = useStyles();
-  const [isEdit, setIsEdit] = useState(false);
 
   const mainLists = todoLists.filter(list => list.role === 'main');
   const customLists = todoLists.filter(list => list.role === 'custom');
@@ -38,7 +37,7 @@ function Sidebar({ isOpen, toggleDrawer }) {
             customLists={customLists}
             toggleDrawer={toggleDrawer}
           />
-          <AddNewList isEdit={isEdit} setIsEdit={setIsEdit} />
+          <AddNewList />
         </div>
       </SwipeableDrawer>
     </div>

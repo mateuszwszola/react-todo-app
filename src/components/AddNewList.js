@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import { IconButton, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
@@ -15,12 +14,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2)
   },
   form: {
-    marginRight: theme.spacing(1),
-    flexGrow: 0
+    marginRight: theme.spacing(1)
   }
 }));
 
-function AddNewList({ isEdit, setIsEdit }) {
+function AddNewList() {
   const dispatch = useContext(TodoListsDispatchContext);
   const classes = useStyles();
   const [listName, handleListNameChange, handleListNameReset] = useInputState(
@@ -31,7 +29,6 @@ function AddNewList({ isEdit, setIsEdit }) {
     if (listName !== '') {
       dispatch({ type: 'ADD_LIST', name: listName });
       handleListNameReset();
-      // setIsEdit(true);
     }
   };
 
@@ -49,6 +46,7 @@ function AddNewList({ isEdit, setIsEdit }) {
           onChange={handleListNameChange}
           label="List Name"
           variant="outlined"
+          size="small"
         />
       </form>
       <IconButton onClick={addNewList}>
@@ -57,10 +55,5 @@ function AddNewList({ isEdit, setIsEdit }) {
     </div>
   );
 }
-
-AddNewList.propTypes = {
-  isEdit: PropTypes.bool.isRequired,
-  setIsEdit: PropTypes.func.isRequired
-};
 
 export default AddNewList;
