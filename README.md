@@ -10,9 +10,10 @@ The initial app was built through the course on Udemy called "The Modern React B
 
 I have added additional features:
 
-- managing different todo lists
+- managing different todo lists using React Router
+- displaying todos based on the current list
 - sidebar where user can navigate to a different list, create a new one, and delete them
-- improved layout
+- improved app layout
 
 ## Deployed version
 
@@ -43,6 +44,7 @@ npm start
 ## Built With
 
 - [React](https://reactjs.org/)
+- [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
 - [Material-UI](https://material-ui.com/)
 
 ## Acknowledgments
