@@ -41,6 +41,9 @@ function todosReducer(state, action) {
           : todo
       );
     }
+    case 'REMOVE_LIST': {
+      return state.filter(todo => todo.listId !== action.id);
+    }
     default:
       return state;
   }

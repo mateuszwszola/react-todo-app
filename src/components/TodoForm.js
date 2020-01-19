@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Paper, TextField } from '@material-ui/core';
 import { TodosDispatchContext } from '../contexts/todosContext';
 import useInputState from '../hooks/useInputState';
@@ -8,14 +8,6 @@ function TodoForm() {
   const dispatch = useContext(TodosDispatchContext);
   const [task, handleTaskChange, handleReset] = useInputState('');
   const currentList = useLocationCurrentList();
-
-  useEffect(() => {
-    function handleKeyDownPress(e) {
-      console.log(e);
-    }
-    document.addEventListener('keydown', handleKeyDownPress);
-    return document.removeEventListener('keydown', handleKeyDownPress);
-  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();

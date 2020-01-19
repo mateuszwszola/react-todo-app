@@ -3,7 +3,6 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { TodosProvider } from '../contexts/todosContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,10 +20,8 @@ function TodoApp(props) {
     <div className={classes.root}>
       <Grid container justify="center" className={classes.gridContainer}>
         <Grid item xs={12} sm={9} md={7} lg={5}>
-          <TodosProvider>
-            <TodoForm />
-            <TodoList />
-          </TodosProvider>
+          <TodoForm />
+          <TodoList />
         </Grid>
       </Grid>
     </div>

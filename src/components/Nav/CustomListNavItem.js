@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
-import { TodoListsDispatchContext } from '../../contexts/todoListsContext';
 import {
   ListItem,
   ListItemIcon,
@@ -12,6 +11,8 @@ import {
 import { List as ListIcon } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
+import { TodosDispatchContext } from '../../contexts/todosContext';
+import { TodoListsDispatchContext } from '../../contexts/todoListsContext';
 import NavLink from './NavLink';
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +22,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CustomListNavItem({ id, name, url, toggleDrawer }) {
-  const dispatch = useContext(TodoListsDispatchContext);
+  const todoListsDispatch = useContext(TodoListsDispatchContext);
+  const todosDispatch = useContext(TodosDispatchContext);
   const history = useHistory();
   const location = useLocation();
   const classes = useStyles();
@@ -29,7 +31,8 @@ function CustomListNavItem({ id, name, url, toggleDrawer }) {
   const { from } = location.state || { from: { pathname: '/' } };
 
   function handleRemoveList(e) {
-    dispatch({ type: 'REMOVE_LIST', id });
+    todosDispatch({ type: 'REMOVE_LIST', id });
+    todoListsDispatch({ type: 'REMOVE_LIST', id });
     history.replace(from);
   }
 

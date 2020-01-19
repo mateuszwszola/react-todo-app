@@ -4,7 +4,7 @@ import { AppBar, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Sidebar from './Sidebar';
+import { Sidebar } from './Sidebar';
 import HeaderListName from './HeaderListName';
 
 const useStyles = makeStyles(theme => ({
