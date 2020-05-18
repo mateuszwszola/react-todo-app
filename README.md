@@ -10,14 +10,15 @@ The initial app was built through the course on Udemy called "The Modern React B
 
 I have added additional features:
 
-- managing different todo lists using React Router
-- displaying todos based on the current list
-- sidebar where user can navigate to a different list, create a new one, and delete them
+- routing with React Router
+- todo lists
+- displaying todos based on the list
+- sidebar where user can navigate to a different list, and manage them
 - improved app layout
 
 ## Deployed version
 
-You can see the deployed version of the app [here](https://adoring-chandrasekhar-3db32a.netlify.com/)
+You can see the deployed version of the app [here](https://adoring-chandrasekhar-3db32a.netlify.app/)
 
 ## Getting Started
 
